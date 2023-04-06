@@ -1,28 +1,36 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        Nodo nodoA = new Nodo("A", 2);
-        Nodo nodoB = new Nodo("B",3);
-        Nodo nodoC = new Nodo("C",4);
-        Nodo nodoD = new Nodo("D",2);
-        Nodo nodoE = new Nodo("E",1);
-        Nodo nodoF = new Nodo("F",5);
+        Nodo nodoCasa = new Nodo("Casa");
+        Nodo nodoA = new Nodo("A");
+        Nodo nodoB = new Nodo("B");
+        Nodo nodoC = new Nodo("C");
+        Nodo nodoD = new Nodo("D");
+        Nodo nodoE = new Nodo("E");
+        Nodo nodoUfficio = new Nodo("Ufficio");
 
-        nodoA.aggiungiNodo(nodoB);
-        nodoA.aggiungiNodo(nodoC);
+        nodoCasa.link(nodoA, 2);
+        nodoCasa.link(nodoD, 8);
 
-        nodoB.aggiungiNodo(nodoC );
-        nodoB.aggiungiNodo(nodoD);
-        nodoB.aggiungiNodo(nodoE);
+        nodoA.link(nodoC, 2);
+        nodoA.link(nodoB, 6);
 
-        nodoC.aggiungiNodo(nodoD);
+        nodoD.link(nodoC,2);
+        nodoD.link(nodoE, 3);
 
-        nodoD.aggiungiNodo(nodoE);
-        nodoD.aggiungiNodo(nodoF);
+        nodoC.link(nodoD,2);
+        nodoC.link(nodoE,9);
 
-        nodoE.aggiungiNodo(nodoF);
+        nodoB.link(nodoUfficio,5);
+
+        nodoE.link(nodoUfficio,1);
 
         Dijkstra dijkstra = new Dijkstra();
-        dijkstra.shortestPath(nodoA);
+        dijkstra.shortestPath(nodoCasa);
 
+        System.out.println("Percorso più breve dalla casa all'ufficio: ");
+        System.out.println(nodoUfficio.percorso());
+        System.out.println("Costo totale: " + nodoUfficio.getPeso());
     }
 }

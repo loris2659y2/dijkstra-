@@ -1,47 +1,30 @@
 import java.util.TreeMap;
 
-public class Nodo {
+public class Nodo implements Comparable<Nodo>{
 
     private String label;
     private int peso = Integer.MAX_VALUE;
     private TreeMap<Nodo, Integer> links;
     private Nodo prev = null;
-    private Nodo next;
-    private int nNodi = 0;
-    public Nodo [] nodiCollegati = new Nodo[100];
 
-    public Nodo(String label, int peso){
+
+    public Nodo(String label){
         this.label=label;
-        this.peso=peso;
+        links = new TreeMap<>((a,b) -> a.label.compareTo(b.label));
     }
 
-    public void aggiungiNodo(Nodo nuovo){
-        //links.put(nuovo, peso);
-        nodiCollegati[nNodi] = nuovo;
-        nNodi ++;
+    public void link(Nodo nuovo, int costo){
+        links.put(nuovo, costo);
+        nuovo.links.put(this, costo);
     }
 
-   /* public int peso(Nodo n){
-        return peso+links.get(n);
-    }*/
-
-    public String percorso(){
-        String path = new String();
-
-        path = label + "->";
-        return path;
-    }
-
+    @Override
     public int compareTo(Nodo nodo){
         return Integer.compare(this.peso, nodo.getPeso());
     }
 
-    public Nodo[] getNodiCollegati() {
-        return nodiCollegati;
-    }
-
-    public String getLabel() {
-        return label;
+    public TreeMap<Nodo, Integer> getLinks() {
+        return links;
     }
 
     public int getPeso() {
@@ -51,4 +34,31 @@ public class Nodo {
     public void setPeso(int peso) {
         this.peso = peso;
     }
+
+    public int weightTo(Nodo n){
+        return peso + links.get(n);
+    }
+
+    public void setPrev(Nodo prev) {
+        this.prev = prev;
+    }
+
+    public String percorso(){
+        String peso = "";
+        String out = "";
+
+        if(this.peso<Integer.MAX_VALUE){
+            peso+=this.peso;
+        }else{
+            peso="inf";
+        }
+        out = "(" + label + "-" + peso + ")";
+
+        if(prev!=null){
+            out= prev.percorso() + "-" + prev.links.get(this) + "->" + out;
+        }
+        return out;
+    }
+
+
 }
