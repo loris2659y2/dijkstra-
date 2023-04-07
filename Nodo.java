@@ -60,5 +60,7 @@ public class Nodo implements Comparable<Nodo>{
         return out;
     }
 
-
+    public String getLabel() {
+        return label;
+    }
 }
